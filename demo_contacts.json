@@ -1,0 +1,29 @@
+[
+  {
+    "name": "John Doe",
+    "phone": "555-123-4567",
+    "email": "john.doe.updated@email.com",
+    "address": "123 Main Street, City, State 12345",
+    "notes": "Work colleague - Updated",
+    "created_date": "2025-07-10 11:41:22",
+    "last_modified": "2025-07-10 12:39:25"
+  },
+  {
+    "name": "Jane Smith",
+    "phone": "555-987-6543",
+    "email": "jane.smith@email.com",
+    "address": "456 Oak Avenue, Town, State 67890",
+    "notes": "Friend from college",
+    "created_date": "2025-07-10 11:41:22",
+    "last_modified": "2025-07-10 11:41:22"
+  },
+  {
+    "name": "Bob Johnson",
+    "phone": "555-555-5555",
+    "email": "bob.johnson@email.com",
+    "address": "789 Pine Road, Village, State 11111",
+    "notes": "Neighbor",
+    "created_date": "2025-07-10 11:41:22",
+    "last_modified": "2025-07-10 11:41:22"
+  }
+]

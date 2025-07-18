@@ -1,0 +1,10 @@
+# Contact Book Application Requirements
+# No external dependencies required - uses only Python standard library
+# Python 3.6+ recommended for f-string support and modern features
+
+# The application uses:
+# - tkinter (GUI) - included in Python standard library
+# - json (data storage) - included in Python standard library
+# - os (file operations) - included in Python standard library
+# - datetime (timestamps) - included in Python standard library
+# - re (regular expressions) - included in Python standard library 

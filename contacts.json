@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Adity",
+    "phone": "7809885678",
+    "email": "adi56576@gamil.com",
+    "address": "delhi",
+    "notes": "nothing",
+    "created_date": "2025-07-10 11:45:40",
+    "last_modified": "2025-07-10 11:45:40"
+  },
+  {
+    "name": "Ritesh Kumar",
+    "phone": "8874130978",
+    "email": "riteshkr56@gmail.com",
+    "address": "Buxar Bihar",
+    "notes": "this is my personal info so please don't share anywhere.",
+    "created_date": "2025-07-10 12:01:58",
+    "last_modified": "2025-07-10 12:01:58"
+  },
+  {
+    "name": "Priyanshu Chaudhary",
+    "phone": "3456789013",
+    "email": "pkchhry1784@gmail.com",
+    "address": "Dharbhang Bihar",
+    "notes": "Hii i am from Bihar but i am delhi boys.",
+    "created_date": "2025-07-10 12:22:42",
+    "last_modified": "2025-07-10 12:30:18"
+  },
+  {
+    "name": "Mohit Kumar",
+    "phone": "6709567841",
+    "email": "mk7689@gm.com",
+    "address": "Chhapra",
+    "notes": "......",
+    "created_date": "2025-07-10 12:45:40",
+    "last_modified": "2025-07-10 12:45:40"
+  }
+]
