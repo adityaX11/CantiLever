@@ -58,11 +58,11 @@ class ContactBook:
     
     def add_contact(self, name, phone, email="", address="", notes=""):
         """Add a new contact."""
-        # Validate input
+# Validate input
         if not name.strip() or not phone.strip():
             raise ValueError("Name and phone number are required.")
         
-        # Check for duplicate phone numbers
+# Check for duplicate phone numbers
         if any(contact.phone == phone for contact in self.contacts):
             raise ValueError("A contact with this phone number already exists.")
         
@@ -72,14 +72,6 @@ class ContactBook:
         self.save_contacts()
         return contact
     
-    # def get_contact_by_phone(self, phone):
-    #     """Get contact by phone number."""
-    #     for contact in self.contacts:
-    #         if contact.phone == phone:
-    #             return contact
-    #     return None
-
-    # this my work
     def get_contact_by_phone(self, phone):
         """Get contact by phone number."""
         phone = phone.strip()
@@ -99,30 +91,11 @@ class ContactBook:
                 (contact.email and query in contact.email.lower())):
                 results.append(contact)
         return results
-    
-    # def update_contact(self, phone, **kwargs):
-    #     """Update an existing contact. If phone is changed, update the phone field in the contact object."""
-    #     contact = self.get_contact_by_phone(phone)
-    #     if contact:
-    #         # If phone is being updated, update the contact's phone field
-    #         new_phone = kwargs.get('phone')
-    #         if new_phone and new_phone != contact.phone:
-    #             # Check for duplicate phone
-    #             if any(c.phone == new_phone for c in self.contacts):
-    #                 raise ValueError("A contact with this phone number already exists.")
-    #             contact.phone = new_phone
-    #         # Update all other fields
-    #         contact.update(**kwargs)
-    #         self.save_contacts()
-    #         return contact
-    #     return None
-
-    # my work
 
     def update_contact(self, original_phone, name=None, phone=None, email=None, address=None, notes=None):
         """Update contact details based on original phone number."""
 
-        # contact = self.find_contact_by_phone(original_phone) #before.
+        
         contact = self.get_contact_by_phone(original_phone)
         if not contact:
             raise ValueError("Contact not found.")
@@ -145,11 +118,6 @@ class ContactBook:
  
         self.save_contacts()
 
-
-
-        
-
-    
     def delete_contact(self, phone):
         """Delete a contact by phone number."""
         contact = self.get_contact_by_phone(phone)
@@ -203,7 +171,7 @@ class ContactBookGUI:
         self.root.geometry("800x600")
         self.root.configure(bg='#f0f0f0')
         
-        # Style configuration
+# Style configuration
         style = ttk.Style()
         style.theme_use('clam')
         
@@ -212,12 +180,12 @@ class ContactBookGUI:
     
     def setup_ui(self):
         """Setup the user interface."""
-        # Main frame
+# Main frame
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.grid(row=0, column=0, sticky="nsew")
         
-        # --- GUI Responsiveness Fixes ---
-        # Ensure all columns and rows expand as window resizes
+# --- GUI Responsiveness Fixes ---
+# Ensure all columns and rows expand as window resizes
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         main_frame.columnconfigure(0, weight=0)  # Buttons column
@@ -226,44 +194,44 @@ class ContactBookGUI:
         main_frame.rowconfigure(1, weight=1)     # Main content row
         main_frame.rowconfigure(2, weight=0)     # Search row
 
-        # For search_frame
+# For search_frame
         search_frame = ttk.Frame(main_frame)
         search_frame.grid(row=2, column=0, columnspan=3, pady=10, sticky="we")
         search_frame.columnconfigure(0, weight=0)
         search_frame.columnconfigure(1, weight=1)
 
-        # For list_frame
+# For list_frame
         list_frame = ttk.Frame(main_frame)
         list_frame.grid(row=1, column=1, sticky="nsew", padx=(10, 0))
         list_frame.columnconfigure(0, weight=1)
         list_frame.rowconfigure(0, weight=1)
         
-        # Treeview for contacts
+# Treeview for contacts
         columns = ('Name', 'Phone', 'Email', 'Address')
         self.tree = ttk.Treeview(list_frame, columns=columns, show='headings', height=15)
         
-        # Configure columns
+# Configure columns
         for col in columns:
             self.tree.heading(col, text=col)
             self.tree.column(col, width=150)
         
-        # Scrollbar
+# Scrollbar
         scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscrollcommand=scrollbar.set)
         
         self.tree.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
         
-        # Title
+# Title
         title_label = ttk.Label(main_frame, text="Contact Book", 
                                font=('Arial', 16, 'bold'))
         title_label.grid(row=0, column=0, columnspan=3, pady=(0, 20))
         
-        # Buttons frame
+# Buttons frame
         buttons_frame = ttk.Frame(main_frame)
         buttons_frame.grid(row=1, column=0, sticky="nw", padx=(0, 10))
         
-        # Buttons
+# Buttons
         ttk.Button(buttons_frame, text="Add Contact", 
                   command=self.add_contact_dialog).grid(row=0, column=0, pady=5, sticky=tk.W)
         ttk.Button(buttons_frame, text="Edit Contact", 
@@ -275,23 +243,23 @@ class ContactBookGUI:
         ttk.Button(buttons_frame, text="View Statistics", 
                   command=self.show_statistics).grid(row=4, column=0, pady=5, sticky=tk.W)
         
-        # Search entry
+# Search entry
         ttk.Label(search_frame, text="Quick Search:").grid(row=0, column=0, padx=(0, 5))
         self.search_var = tk.StringVar()
         self.search_var.trace('w', self.on_search_change)
         search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=40)
         search_entry.grid(row=0, column=1, sticky="we")
         
-        # Bind double-click event
+# Bind double-click event
         self.tree.bind('<Double-1>', self.on_contact_double_click)
     
     def refresh_contact_list(self, contacts=None):
         """Refresh the contact list display and keep Treeview in sync with backend.
         Always clear selection after refresh to avoid stale selection issues when phone numbers change."""
-        # Clear existing items
+# Clear existing items
         for item in self.tree.get_children():
             self.tree.delete(item)
-        # Add contacts
+# Add contacts
         if contacts is None:
             contacts = self.contact_book.get_all_contacts()
         for contact in contacts:
@@ -301,7 +269,7 @@ class ContactBookGUI:
                 contact.email,
                 contact.address
             ))
-        # Always clear selection after refresh
+# Always clear selection after refresh
         self.tree.selection_remove(self.tree.selection())
     
     def on_search_change(self, *args):
@@ -313,23 +281,6 @@ class ContactBookGUI:
         else:
             self.refresh_contact_list()
     
-    # def get_selected_contact(self):
-    #     """Get the currently selected contact. Returns None and shows a warning if nothing is selected or if the contact is not found."""
-    #     selection = self.tree.selection()
-    #     if not selection:
-    #         messagebox.showwarning("No Selection", "Please select a contact first.")
-    #         return None
-    #     item = self.tree.item(selection[0])
-    #     if not item or not item.get('values') or len(item['values']) < 2:
-    #         messagebox.showwarning("Selection Error", "Could not retrieve contact details from selection.")
-    #         return None
-    #     phone = item['values'][1]  # Phone is in the second column
-    #     contact = self.contact_book.get_contact_by_phone(phone)
-    #     if not contact:
-    #         messagebox.showwarning("Not Found", "Selected contact could not be found.")
-    #     return contact
-
-#  this is my work.
     def get_selected_contact(self):
         """Get the currently selected contact. Returns None and shows a warning if nothing is selected or if the contact is not found."""
         selection = self.tree.selection()
@@ -424,11 +375,11 @@ class ContactBookGUI:
         details_window.geometry("400x300")
         details_window.configure(bg='#f0f0f0')
         
-        # Center the window
+# Center the window
         details_window.transient(self.root)
         details_window.grab_set()
         
-        # Details frame
+# Details frame
         frame = ttk.Frame(details_window, padding="20")
         frame.grid(row=0, column=0, sticky="nsew")
         
@@ -436,7 +387,7 @@ class ContactBookGUI:
         details_window.rowconfigure(0, weight=1)
         frame.columnconfigure(1, weight=1)
         
-        # Contact details
+# Contact details
         ttk.Label(frame, text="Name:", font=('Arial', 10, 'bold')).grid(row=0, column=0, sticky=tk.W, pady=2)
         ttk.Label(frame, text=contact.name).grid(row=0, column=1, sticky=tk.W, pady=2)
         
@@ -458,7 +409,7 @@ class ContactBookGUI:
         ttk.Label(frame, text="Modified:", font=('Arial', 10, 'bold')).grid(row=6, column=0, sticky=tk.W, pady=2)
         ttk.Label(frame, text=contact.last_modified).grid(row=6, column=1, sticky=tk.W, pady=2)
         
-        # Close button
+# Close button
         ttk.Button(frame, text="Close", command=details_window.destroy).grid(row=7, column=0, columnspan=2, pady=20)
     
     def run(self):
@@ -471,17 +422,17 @@ class ContactDialog:
     def __init__(self, parent, title, contact=None):
         self.result = None
         
-        # Create dialog window
+# Create dialog window
         self.dialog = tk.Toplevel(parent)
         self.dialog.title(title)
         self.dialog.geometry("400x350")
         self.dialog.configure(bg='#f0f0f0')
         
-        # Center the window
+# Center the window
         self.dialog.transient(parent)
         self.dialog.grab_set()
         
-        # Variables
+# Variables
         self.name_var = tk.StringVar(value=contact.name if contact else "")
         self.phone_var = tk.StringVar(value=contact.phone if contact else "")
         self.email_var = tk.StringVar(value=contact.email if contact else "")
@@ -499,11 +450,11 @@ class ContactDialog:
         self.dialog.rowconfigure(0, weight=1)
         frame.columnconfigure(1, weight=1)
         
-        # Title
+# Title
         ttk.Label(frame, text="Contact Information", 
                  font=('Arial', 12, 'bold')).grid(row=0, column=0, columnspan=2, pady=(0, 20))
         
-        # Form fields
+# Form fields
         ttk.Label(frame, text="Name *:").grid(row=1, column=0, sticky=tk.W, pady=2)
         ttk.Entry(frame, textvariable=self.name_var, width=30).grid(row=1, column=1, sticky="we", pady=2)
         
@@ -520,14 +471,14 @@ class ContactDialog:
         notes_entry = ttk.Entry(frame, textvariable=self.notes_var, width=30)
         notes_entry.grid(row=5, column=1, sticky="we", pady=2)
         
-        # Buttons
+# Buttons
         button_frame = ttk.Frame(frame)
         button_frame.grid(row=6, column=0, columnspan=2, pady=20)
         
         ttk.Button(button_frame, text="Save", command=self.save).grid(row=0, column=0, padx=5)
         ttk.Button(button_frame, text="Cancel", command=self.cancel).grid(row=0, column=1, padx=5)
         
-        # Focus on name field
+# Focus on name field
         frame.focus_set()
     
     def save(self):
